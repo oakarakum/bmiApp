@@ -1,4 +1,4 @@
-/* class LimitRangeTextInputFormatter extends TextInputFormatter {
+/*  class LimitRangeTextInputFormatter extends TextInputFormatter {
   LimitRangeTextInputFormatter(this.min, this.max) : assert(min < max);
 
   final int min;
@@ -15,4 +15,4 @@
     }
     return newValue;
   }
-} */
+}  */
