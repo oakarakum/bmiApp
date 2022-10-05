@@ -202,27 +202,27 @@ class _first_screenState extends State<first_screen> {
                 SizedBox(height: 175),
                 GestureDetector(
                   onTap: () {
-                    try {
-                      heightcont = false;
-                      weightcont = false;
-                      agecont = false;
-                    } catch (e) {}
+                    // try {
+                    //   heightcont = false;
+                    //   weightcont = false;
+                    //   agecont = false;
+                    // } catch (e) {}
 
                     if (formKey.currentState!.validate()) {
                       setState(() {
                         formKey.currentState!.save();
                       });
+                      CalculateResult calculateResult =
+                          CalculateResult(weight: weight, height: height);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => second_screen(
+                                  bmiC: calculateResult.bmi_calc(),
+                                  cond: calculateResult.condition(),
+                                  adv: calculateResult.advice(),
+                                  ftp: calculateResult.foto()))));
                     }
-                    CalculateResult calculateResult =
-                        CalculateResult(weight: weight, height: height);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => second_screen(
-                                bmiC: calculateResult.bmi_calc(),
-                                cond: calculateResult.condition(),
-                                adv: calculateResult.advice(),
-                                ftp: calculateResult.foto()))));
                   },
                   child: Container(
                     height: 50,
