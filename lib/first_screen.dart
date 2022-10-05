@@ -17,7 +17,7 @@ class first_screen extends StatefulWidget {
   State<first_screen> createState() => _first_screenState();
 }
 
-/* class LimitRangeTextInputFormatter extends TextInputFormatter {
+class LimitRangeTextInputFormatter extends TextInputFormatter {
   LimitRangeTextInputFormatter(this.min, this.max) : assert(min < max);
 
   final int min;
@@ -31,10 +31,10 @@ class first_screen extends StatefulWidget {
       return TextEditingValue(text: min.toString());
     } else if (value > max) {
       return TextEditingValue(text: max.toString());
-    } 
+    }
     return newValue;
   }
-} */
+}
 
 class _first_screenState extends State<first_screen> {
   int gender_index = 0;
@@ -105,16 +105,16 @@ class _first_screenState extends State<first_screen> {
                   ],
                   keyboardType: TextInputType
                       .number, //keyboarda sadece sayı yazılması için
-                  validator: (age) {
-                    if (age!.isEmpty) {
+                  validator: (value) {
+                    if (value!.isEmpty) {
                       agecont == false;
-                      return 'Age section cannot be empty';
-                    } else if (int.parse(age) < 1) {
+                      return 'Age cannot be empty';
+                    } else if (int.parse(value) < 1) {
                       agecont == false;
-                      return 'Age section cannot be lower than 1';
-                    } else if (int.parse(age) > 120) {
+                      return 'Age cannot be lower than 1';
+                    } else if (int.parse(value) > 120) {
                       agecont == false;
-                      return 'Age section cannot be higher than 120';
+                      return 'Age cannot be higher than 120';
                     } else {
                       return null;
                     }
@@ -134,20 +134,20 @@ class _first_screenState extends State<first_screen> {
                     height = double.parse(value);
                   },
                   inputFormatters: [
-                    //LimitRangeTextInputFormatter(50, 220),
+                    //LimitRangeTextInputFormatter(100, 220),
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(3),
                   ],
-                  validator: (height) {
-                    if (height!.isEmpty) {
+                  validator: (value) {
+                    if (value!.isEmpty) {
                       heightcont == false;
-                      return 'Height section cannot be empty';
-                    } else if (int.parse(height) < 50) {
+                      return 'Height cannot be empty';
+                    } else if (int.parse(value) < 50) {
                       heightcont == false;
-                      return 'Height section cannot be lower than 50';
-                    } else if (int.parse(height) > 220) {
+                      return 'Height cannot be lower than 50';
+                    } else if (int.parse(value) > 220) {
                       heightcont == false;
-                      return 'Height section cannot be higher than 220';
+                      return 'Height cannot be higher than 220';
                     } else {
                       return null;
                     }
@@ -166,28 +166,26 @@ class _first_screenState extends State<first_screen> {
                           fontSize: 16)),
                 ),
                 TextFormField(
-                  onChanged: (value) {
-                    weight = double.parse(value);
+                  onChanged: (height) {
+                    weight = double.parse(height);
                   },
                   keyboardType: TextInputType.number,
                   inputFormatters: [
-                    //LimitRangeTextInputFormatter(3, 400),
+                    LimitRangeTextInputFormatter(3, 400),
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(3),
                   ],
-                  validator: (weight) {
-                    if (weight!.isEmpty) {
+                  validator: (value) {
+                    if (value!.isEmpty) {
                       heightcont == false;
-                      return 'Weight section cannot be empty';
-                    } else if (int.parse(weight) < 3) {
+                      return 'Weight cannot be empty';
+                    } else if (int.parse(value) < 3) {
                       heightcont == false;
-                      return 'Weight section cannot be lower than 3';
-                    } else if (int.parse(weight) > 300) {
+                      return 'Weight cannot be lower than 3';
+                    } else if (int.parse(value) > 300) {
                       heightcont == false;
-                      return 'Weight section cannot be higher than 300';
-                    } else {
-                      return null;
-                    }
+                      return 'Weight cannot be higher than 300';
+                    } else {}
                   },
                   decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -204,8 +202,16 @@ class _first_screenState extends State<first_screen> {
                 SizedBox(height: 175),
                 GestureDetector(
                   onTap: () {
+                    try {
+                      heightcont = false;
+                      weightcont = false;
+                      agecont = false;
+                    } catch (e) {}
+
                     if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
+                      setState(() {
+                        formKey.currentState!.save();
+                      });
                     }
                     CalculateResult calculateResult =
                         CalculateResult(weight: weight, height: height);
