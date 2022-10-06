@@ -50,6 +50,46 @@ class _first_screenState extends State<first_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(left: 25, right: 25, bottom: 30),
+        child: GestureDetector(
+          onTap: () {
+            // try {
+            //   heightcont = false;
+            //   weightcont = false;
+            //   agecont = false;
+            // } catch (e) {}
+
+            if (formKey.currentState!.validate()) {
+              setState(() {
+                formKey.currentState!.save();
+              });
+              CalculateResult calculateResult =
+                  CalculateResult(weight: weight, height: height);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => second_screen(
+                          bmiC: calculateResult.bmi_calc(),
+                          cond: calculateResult.condition(),
+                          adv: calculateResult.advice(),
+                          ftp: calculateResult.foto()))));
+            }
+          },
+          child: Container(
+            height: 50,
+            width: 350,
+            decoration: BoxDecoration(
+                color: Colors.blue, borderRadius: BorderRadius.circular(100)),
+            child: Center(
+              child: Text(
+                "Calculate BMI",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+          ),
+        ),
+      ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Form(
@@ -199,45 +239,7 @@ class _first_screenState extends State<first_screen> {
                           color: Color.fromARGB(255, 112, 109, 109),
                           fontSize: 16)),
                 ),
-                SizedBox(height: 175),
-                GestureDetector(
-                  onTap: () {
-                    // try {
-                    //   heightcont = false;
-                    //   weightcont = false;
-                    //   agecont = false;
-                    // } catch (e) {}
-
-                    if (formKey.currentState!.validate()) {
-                      setState(() {
-                        formKey.currentState!.save();
-                      });
-                      CalculateResult calculateResult =
-                          CalculateResult(weight: weight, height: height);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => second_screen(
-                                  bmiC: calculateResult.bmi_calc(),
-                                  cond: calculateResult.condition(),
-                                  adv: calculateResult.advice(),
-                                  ftp: calculateResult.foto()))));
-                    }
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100)),
-                    child: Center(
-                      child: Text(
-                        "Calculate BMI",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
-                  ),
-                )
+                //SizedBox(height: 175),
               ],
             ),
           ),
